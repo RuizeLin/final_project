@@ -8,7 +8,7 @@ public class Platform{
   // constructors
   Platform(float l, float h, int dir, int d) {
     this.l = l;
-    this.h = h;
+    this.h = 20;
     this.dir = dir;
     this.d = d;
   }
@@ -33,8 +33,5 @@ public class Platform{
     // left
     quad(x, y + diag2, x, y + diag2 + h, x + diag1, y + h, x + diag1, y);
     
-    //pushMatrix();
-    //translate(0, y + h);
-    //popMatrix();
   }
 }
