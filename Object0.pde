@@ -1,16 +1,22 @@
 Object a;
+Particles p;
+int x0 = 50;
+int y0 = 500;
+void setup() {
+  size(600, 600);
+  a = new Object(x0, y0);
+  p = new Particles(x0, y0);
+  noLoop();
+}
 
-//void setup() {
-//  size(600, 600);
-//  a = new Object(50, 550);
-//  noLoop();
-//}
-
-//void draw() {
-//  if (a.x < width && a.y < height) {
-//    a.launchUpdate();
-//  }
-//}
+void draw() {
+  if (pressing == true)
+    p.particles();
+  if (pressing == false && a.x < width && a.y < height) {
+    println(pressing);
+    a.launchUpdate();
+  }
+}
 
 public class Object{
   
@@ -52,13 +58,14 @@ public class Object{
   int n = 0;
   void launchUpdate() {
     t = (millis() - t0) / (float) 100; // speed of animation 75
-    //background(255);
+    background(255);
     println(a.x + ", " + a.y);
     if (n != 1)
       create();
     x = x0 + vx * t;
     y = y0 - (vy * t - 0.5 * g * t * t);
     n++;
+    
   }
   
   
@@ -67,18 +74,27 @@ public class Object{
   }
 }
 
+boolean pressing = true;
 float counter = 0;
 void keyPressed() {
   a.v = 30;
+  pressing = true;
   counter += 0.5;
+  loop();
 }
 
 float t0 = 0;
 void keyReleased() {
+  pressing = false;
+  a.x0 = x0;
+  a.y0 = y0;
+  a.x = x0;
+  a.y = y0;
+  
   a.v += counter;
   counter = 0;
   t0 = millis();
   a.vx = a.v * cos(a.angle);
   a.vy = a.v * sin(a.angle);
-  loop();
+  
 }

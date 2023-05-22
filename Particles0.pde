@@ -1,15 +1,14 @@
 Particles charge;
-void setup() {
-  size(600, 600);
-  circle(300, 300, 50);
-  charge = new Particles();
-}
+//void setup() {
+//  size(600, 600);
+//  circle(300, 300, 50);
+//  charge = new Particles();
+//}
 
-int i = 0;
-void draw() {
-  charge.particles();
+//void draw() {
+//  charge.particles();
   
-}
+//}
   
 
 public class Particles{
@@ -21,12 +20,12 @@ public class Particles{
   Particle e;
   
   // constructors
-  Particles() {
-      a = new Particle(300, 300);
-      b = new Particle(300, 300);
-      c = new Particle(300, 300);
-      d = new Particle(300, 300);
-      e = new Particle(300, 300);
+  Particles(int x0, int y0) {
+      a = new Particle(x0, y0);
+      b = new Particle(x0, y0);
+      c = new Particle(x0, y0);
+      d = new Particle(x0, y0);
+      e = new Particle(x0, y0);
   }
   
   // methods
@@ -44,6 +43,7 @@ public class Particles{
   }
   
   void drawAll() {
+    circle(a.x0, a.y0, 50);
     a.create();
     b.create();
     c.create();
@@ -76,7 +76,7 @@ private class Particle{
     d = random(10, 70);
     x = x0 - d * cos(dir);
     y = y0 + d * sin(dir);
-    size = 4 + random(8);
+    size = 5 + random(8);
     range = int(random(5, 25));
   }
   
@@ -88,7 +88,7 @@ private class Particle{
   Particle update() {
     if (x < x0 + range && x > x0 - range 
         && y < y0 + range && y > y0 - range) {
-          return new Particle(300, 300);
+          return new Particle(x0, y0);
     }
     else {
       background(255);
