@@ -26,7 +26,7 @@ public class Platform{
     y = y - d * sin(PI / 5.5);
   }
   
-  void cube() {
+  void platform() {
     // top
     float diag1 = l * cos(PI / 5.5);
     float diag2 = l * sin(PI / 5.5);
@@ -37,5 +37,16 @@ public class Platform{
     
     // left
     quad(x, y + diag2, x, y + diag2 + h, x + diag1, y + h, x + diag1, y);
+  }
+  
+  void sink(Platform oldp, Platform newp) {
+    while (h > 0) {
+      background(255);
+      newp.platform();
+      oldp.platform();
+      platform();
+      y--;
+      h--;
+    }
   }
 }
