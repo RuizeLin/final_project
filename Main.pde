@@ -61,7 +61,7 @@ void moveCamera() {
     dx = 150 - oldp.x;
     dy = 600 - oldp.y;
     updateXY(dx, dy);
-    newp = new Platform(oldp.x, oldp.y, 50 + random(10) * 10, 40 + random(8) * 5, (int) random(2), 5 + (int) random(oldp.l / 4, oldp.l / 4 + 20) * 5);
+    newp = new Platform(oldp.x, oldp.y, 50 + random(10) * 10, 40 + random(8) * 5, dir, 5 + (int) random(oldp.l / 4, oldp.l / 4 + 20) * 5);
     generatePlatform();
   }
   
