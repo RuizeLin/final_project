@@ -21,6 +21,7 @@ public class Particles{
   
   // constructors
   Particles(int x0, int y0) {
+      y0 -= 25;
       a = new Particle(x0, y0);
       b = new Particle(x0, y0);
       c = new Particle(x0, y0);
@@ -31,24 +32,19 @@ public class Particles{
   // methods
   void particles() {
     a = a.update();
-    drawAll();
     b = b.update();
-    drawAll();
     c = c.update();
-    drawAll();
     d = d.update();
-    drawAll();
     e = e.update();
-    drawAll();
   }
   
   void drawAll() {
-    circle(a.x0, a.y0, 50);
-    a.create();
-    b.create();
-    c.create();
-    d.create();
-    e.create();
+    circle(a.x, a.y, 50);
+    a.particle();
+    b.particle();
+    c.particle();
+    d.particle();
+    e.particle();
   }
 }
 
@@ -81,7 +77,9 @@ private class Particle{
   }
   
   // methods
-  void create() {
+  void particle() {
+    stroke(#FFFFFF);
+    fill(#FAFF03);
      circle(x, y, size);
   }
   
@@ -91,8 +89,7 @@ private class Particle{
           return new Particle(x0, y0);
     }
     else {
-      background(255);
-      circle(x, y, size);
+      particle();
       x += v * cos(dir);
       y -= v * sin(dir);
       if (size > 3)
