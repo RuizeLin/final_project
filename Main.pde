@@ -43,7 +43,7 @@ void draw() {
     case 1:
       o.launchUpdate(t0, p[p.length - 1].dir);
       drawAll();
-      if (isOn() && k >= 180) {
+      if (isOn() && k >= 120) {
         o.x0 = (int) o.x;
         o.y0 = (int) o.y;
         s = 2;
@@ -103,7 +103,6 @@ void moveCamera() {
       formerp = p[p.length - 2];
       newP(dir);
       newp = p[p.length - 1];
-      currentH = 0;
     }
     n++;
   }
@@ -112,12 +111,13 @@ void moveCamera() {
   if (currentp.y < 550) {
     updateXY(dx1, dy1);
     background(c);
-    if (!(rise()))
+    if (!(newp.rise()))
       newp.platform();
     drawP();
     o.object();
   }
   
+  // reset
   if (p[p.length - 2].y >= 550) {
     n = 0;
     o.x0 = (int) o.x;
@@ -174,36 +174,19 @@ boolean isOn() {
   if (newp.dir == 0)
     m2 *= -1;
   y1 = m2 * (o.x - oldp.x) + (oldp.y - oldp.l * sin(32)); // front edge of oldp
-  y2 = m2 * (o.x - newp.x) + (newp.y + newp.l * sin(32));// back edge of newp
-  y3 = m2 * (o.x - newp.x) + (newp.y - newp.l * sin(32));// front edge of newp
+  y2 = m2 * (o.x - newp.x) + (newp.y + newp.l * sin(32)); // back edge of newp
+  y3 = m2 * (o.x - newp.x) + (newp.y - newp.l * sin(32)); // front edge of newp
   
-  fill(0);
-  text("c", o.x, y);
-  fill(0);
-  text("c1", o.x, y1);
-  fill(0);
-  text("c2", o.x, y2);
-  fill(0);
-  text("c3", o.x, y3);
+  //fill(0);
+  //text("c", o.x, y);
+  //fill(0);
+  //text("c1", o.x, y1);
+  //fill(0);
+  //text("c2", o.x, y2);
+  //fill(0);
+  //text("c3", o.x, y3);
   
   return  (o.y > y1 || o.y < y2 && o.y > y3) && o.isOn(o.x, y);
-}
-
-// Animation ---------------------------------------------------------------
-// rising new platform
-int currentH = 0;
-boolean rise() {
-  Platform newp = p[p.length - 1];
-  Platform a = new Platform(newp.x, newp.y + (newp.h - currentH), newp.l, currentH, newp.dir, newp.d);
-  if (currentH < newp.h) {
-    background(c);
-    a.platform();
-    drawP();
-    currentH++;
-    return true;
-  }
-  else
-    return false;
 }
 
 // Helper -----------------------------------------------------------
@@ -227,7 +210,7 @@ void removeP() {
 float counter = 0;
 void keyPressed() {
   o.v = 40;
-  counter += 1.5;
+  counter += 1.4;
   s = 0;
 }
 

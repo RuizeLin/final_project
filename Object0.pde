@@ -51,7 +51,6 @@ public class Object{
   
   // methods
   void object() {
-    stroke(#939393);
     fill(#FFFFFF);
     circle(x, y - d / 2, d);
   }

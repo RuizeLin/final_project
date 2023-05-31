@@ -78,9 +78,8 @@ private class Particle{
   
   // methods
   void particle() {
-    stroke(#FFFFFF);
     fill(#FAFF03);
-     circle(x, y, size);
+    circle(x, y, size);
   }
   
   Particle update() {

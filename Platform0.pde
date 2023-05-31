@@ -7,6 +7,7 @@ public class Platform{
   int dir;
   int d;
   float angle = radians(32);
+  int currentH;
   
   // constructors
   Platform(float x, float y, float l, float h, int dir, int d) {
@@ -16,6 +17,7 @@ public class Platform{
     this.h = h;
     this.dir = dir;
     this.d = d;
+    currentH = 0;
   }
   
   // methods
@@ -42,6 +44,20 @@ public class Platform{
     // right
     fill(#65DED4);
     quad(x, y + diag2, x, y + diag2 + h, x + diag1, y + h, x + diag1, y);
+  }
+  
+  boolean rise() {
+    //Platform newp = p[p.length - 1];
+    Platform a = new Platform(x, y + (h - currentH), l, currentH, dir, d);
+    if (currentH < h) {
+      background(c);
+      a.platform();
+      
+      currentH++;
+      return true;
+    }
+    else
+      return false;
   }
   
 }
