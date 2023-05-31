@@ -8,8 +8,8 @@ s = 0: no camera moving, hold animation
 s = 1: no camera moving, object projectile animation
 s = 2: camera moving, spawn new platform
 */
-
 color c = #DBFFC6;//#FFC6EB;
+int score = 0;
 // float h0 = 40 + random(8) * 5;
 
 void setup() {
@@ -23,6 +23,10 @@ void setup() {
   
   o = new Object(150, 550);  
   pt = new Particles(150, 550);
+  
+  textSize(90);
+  fill(#21E8B4);
+  text("" + score, 30, 60);
 }
 
 // Draw ------------------------------------------------------------------
@@ -42,7 +46,14 @@ void draw() {
       break;
     case 1:
       o.launchUpdate(t0, p[p.length - 1].dir);
-      drawAll();
+      background(c);
+      if (k >= 60) {
+        p[p.length - 1].platform();
+        o.object();
+        drawP();
+      }
+      else
+        drawAll();
       if (isOn() && k >= 120) {
         o.x0 = (int) o.x;
         o.y0 = (int) o.y;
@@ -54,6 +65,8 @@ void draw() {
       moveCamera();
       break;
   }
+  fill(#9B9B9B);
+  text(score, 40, 100);
 }
 
 void drawAll() {
@@ -69,6 +82,9 @@ void drawP() {
     p[i].platform();
   }
 }
+
+// draw platforms in front of ball
+
 
 // Update ------------------------------------------------------------------
 // add new platform to platform array
@@ -105,6 +121,7 @@ void moveCamera() {
       newp = p[p.length - 1];
     }
     n++;
+    score++;
   }
   
   // move platforms
@@ -177,16 +194,36 @@ boolean isOn() {
   y2 = m2 * (o.x - newp.x) + (newp.y + newp.l * sin(32)); // back edge of newp
   y3 = m2 * (o.x - newp.x) + (newp.y - newp.l * sin(32)); // front edge of newp
   
-  //fill(0);
-  //text("c", o.x, y);
-  //fill(0);
-  //text("c1", o.x, y1);
-  //fill(0);
-  //text("c2", o.x, y2);
-  //fill(0);
-  //text("c3", o.x, y3);
+  fill(0);   
+  text("c", o.x, y);
+  fill(0);
+  text("c1", o.x, y1);
+  fill(0);   
+  text("c2", o.x, y2);
+  fill(0);
+  text("c3", o.x, y3);
   
   return  (o.y > y1 || o.y < y2 && o.y > y3) && o.isOn(o.x, y);
+}
+
+// return 0 if object is on platform, 1 if it is falling between platforms, 2 if it is falling behind the newest platform
+int location() {
+  float x1, x2, x3;
+  float m2 = tan(radians(32));
+  if (newp.dir == 0)
+    m2 *= -1;
+  x1 = (o.y - (oldp.y - oldp.l * sin(32))) / m2 + oldp.x; // front edge of oldp
+  x2 = (o.y - (newp.y + newp.l * sin(32))) / m2 + newp.x;
+  x3 = (o.y - (newp.y - newp.l * sin(32))) / m2 + newp.x;
+  
+  //o.y = m2 * (x2 - newp.x) + (newp.y + newp.l * sin(32)); // back edge of newp
+  //o.y = m2 * (x3 - newp.x) + (newp.y - newp.l * sin(32));
+  if (o.x <= x1 || o.x >= x2 && o.x <= x3)
+    return 0;
+    
+  return -1;
+  
+    
 }
 
 // Helper -----------------------------------------------------------
@@ -218,8 +255,8 @@ float t0 = 0;
 void keyReleased() {
   o.v += counter;
   counter = 0;
-  if (o.v > 110)
-    o.v = 110;
+  if (o.v > 120)
+    o.v = 120;
   t0 = millis();
   o.vx = o.v * cos(o.angle);
   o.vy = o.v * sin(o.angle);
