@@ -210,7 +210,7 @@ void removeP() {
 float counter = 0;
 void keyPressed() {
   o.v = 40;
-  counter += 1.4;
+  counter += 1.5;
   s = 0;
 }
 

@@ -1,16 +1,3 @@
-Particles charge;
-//void setup() {
-//  size(600, 600);
-//  circle(300, 300, 50);
-//  charge = new Particles();
-//}
-
-//void draw() {
-//  charge.particles();
-  
-//}
-  
-
 public class Particles{
   // fields
   Particle a;
@@ -36,15 +23,6 @@ public class Particles{
     c = c.update();
     d = d.update();
     e = e.update();
-  }
-  
-  void drawAll() {
-    circle(a.x, a.y, 50);
-    a.particle();
-    b.particle();
-    c.particle();
-    d.particle();
-    e.particle();
   }
 }
 
