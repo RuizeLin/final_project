@@ -18,7 +18,7 @@ void setup() {
   frameRate(120);
   
   p[0] = new Platform(150, 550, 100, 20, 1, 0);
-  p[1] = new Platform(p[0].x, p[0].y, 80 + random(10) * 10, 20, 1, (int) random(p[0].l / 3.5 , p[0].l / 3.5 + 40) * 5);
+  p[1] = new Platform(p[0].x, p[0].y, 80 + random(10) * 10, 20, 1, (int) random(p[0].l / 8 + 25, 70) * 5);
   p[1].newXY();
   
   o = new Object(150, 550);  
@@ -31,8 +31,8 @@ void setup() {
 
 // Draw ------------------------------------------------------------------
 int k = 0;
+boolean overshot = false;
 void draw() {
-  // if object touches platform, spawn new platform
   switch (s) {
     case -1:
       background(c);
@@ -47,17 +47,22 @@ void draw() {
     case 1:
       o.launchUpdate(t0, p[p.length - 1].dir);
       background(c);
-      if (k >= 60) {
+      drawAll();
+      if (k >= 100) {
         p[p.length - 1].platform();
         o.object();
         drawP();
+      } 
+      if (overshot == true) {
+        p[p.length - 1].platform();
+        drawP();
       }
-      else
-        drawAll();
-      if (isOn() && k >= 120) {
-        o.x0 = (int) o.x;
-        o.y0 = (int) o.y;
-        s = 2;
+      else {
+        if (isOn() && k >= 150) {
+          o.x0 = (int) o.x;
+          o.y0 = (int) o.y;
+          s = 2;
+        }
       }
       k++;
       break;
@@ -92,14 +97,14 @@ Platform oldp;
 void newP() {
   copyP();
   oldp = p[p.length - 2];
-  p[p.length - 1] = new Platform(oldp.x, oldp.y, 80 + random(10) * 10, 20, (int) random(2), (int) random(oldp.l / 3 , oldp.l / 3.5 + 40) * 5);
+  p[p.length - 1] = new Platform(oldp.x, oldp.y, 80 + random(10) * 10, 20, (int) random(2), (int) random(oldp.l / 8 + 25, 70) * 5);
   p[p.length - 1].newXY();
 }
 
 void newP(int dir) {
   copyP();
   oldp = p[p.length - 2];
-  p[p.length - 1] = new Platform(oldp.x, oldp.y, 80 + random(10) * 10, 20, dir, (int) random(oldp.l / 3 , oldp.l / 3.5 + 40) * 5);
+  p[p.length - 1] = new Platform(oldp.x, oldp.y, 80 + random(10) * 10, 20, dir, (int) random(oldp.l / 8 + 25, 70) * 5);
   p[p.length - 1].newXY();
 }
 
@@ -194,36 +199,24 @@ boolean isOn() {
   y2 = m2 * (o.x - newp.x) + (newp.y + newp.l * sin(32)); // back edge of newp
   y3 = m2 * (o.x - newp.x) + (newp.y - newp.l * sin(32)); // front edge of newp
   
-  fill(0);   
-  text("c", o.x, y);
-  fill(0);
-  text("c1", o.x, y1);
-  fill(0);   
-  text("c2", o.x, y2);
-  fill(0);
-  text("c3", o.x, y3);
+  //textSize(10);
+  //fill(0);   
+  //text("c", o.x, y);
+  //fill(0);
+  //text("c1", o.x, y1);
+  //fill(0);   
+  //text("c2", o.x, y2);
+  //fill(0);
+  //text("c3", o.x, y3);
   
-  return  (o.y > y1 || o.y < y2 && o.y > y3) && o.isOn(o.x, y);
-}
-
-// return 0 if object is on platform, 1 if it is falling between platforms, 2 if it is falling behind the newest platform
-int location() {
-  float x1, x2, x3;
-  float m2 = tan(radians(32));
-  if (newp.dir == 0)
-    m2 *= -1;
-  x1 = (o.y - (oldp.y - oldp.l * sin(32))) / m2 + oldp.x; // front edge of oldp
-  x2 = (o.y - (newp.y + newp.l * sin(32))) / m2 + newp.x;
-  x3 = (o.y - (newp.y - newp.l * sin(32))) / m2 + newp.x;
-  
-  //o.y = m2 * (x2 - newp.x) + (newp.y + newp.l * sin(32)); // back edge of newp
-  //o.y = m2 * (x3 - newp.x) + (newp.y - newp.l * sin(32));
-  if (o.x <= x1 || o.x >= x2 && o.x <= x3)
-    return 0;
-    
-  return -1;
-  
-    
+  // return 0 is false, 1 if true, 2 if object overshot
+  if ((o.y > y1 || o.y < y2 && o.y > y3) && o.isOn(o.x, y))
+    return true;
+  else {
+    if (o.y > y && o.y < y3)
+      overshot = true;
+    return false;
+  }
 }
 
 // Helper -----------------------------------------------------------

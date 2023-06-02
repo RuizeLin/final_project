@@ -25,7 +25,7 @@ public class Object{
     y0 = y;
     t = 0;
     v = 30;
-    angle = radians(80);
+    angle = radians(75);
     
   }
   
