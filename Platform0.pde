@@ -50,7 +50,6 @@ public class Platform{
     //Platform newp = p[p.length - 1];
     Platform a = new Platform(x, y + (h - currentH), l, currentH, dir, d);
     if (currentH < h) {
-      background(c);
       a.platform();
       
       currentH++;
@@ -59,5 +58,4 @@ public class Platform{
     else
       return false;
   }
-  
 }
