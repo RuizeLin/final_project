@@ -1,60 +1,287 @@
-void setup() {
-  size(600, 900);
-  titleMenu();
-  
-}
-
-void draw() {
-  MouseOn();
-  
-}
-
-int diag = 280;
-int xc = width / 2;
-int yc = height / 2 - 60;
-void titleMenu() {
-  diag = 280;
-  xc = width / 2;
-  yc = height / 2 - 60;
-  noStroke();
-  fill(#FFFFFF);
-  quad(xc + diag, yc, xc, yc + diag, xc - diag, yc, xc, yc - diag);
-  
-  yc += 70;
-  diag = 250;
-  quad(xc + diag, yc, xc, yc + diag, xc - diag, yc, xc, yc - diag);
-  yc -= 25;
-  stroke(#8B5400);
-  strokeWeight(3);
-  line(xc - diag + 40, yc, xc + diag - 40, yc);
-  strokeWeight(1.5);
-  line(xc, yc + 18, xc, yc + 90);
-  line(xc - 140, yc + 105, xc + 140, yc + 105);
-  
-  fill(#8B5400);
-  textSize(40);
-  text("START", xc - 150, yc + 65);
-  
-  text("SCORE", xc + 40, yc + 65);
-  
-  
-}
-
-void MouseOn() {
-  diag = 280;
-  xc = width / 2;
-  yc = height / 2 - 5;
-  if (mouseX < xc && mouseY > yc) {
-    noStroke();
-    fill(#D3D3D3);
-    rect(xc - 150, yc + 3, 140, 80);
-    quad(xc - diag + 60, yc + 20, xc - diag + 75, yc + 3, xc - 150, yc + 3, xc - 150, yc + 85);
+public class Menu{
+  PImage title;
+  //void setup() {
+  //  size(600, 900);
+  //  title = loadImage("Title.PNG");
+  //  title.resize(700, 0);
+  //  titleMenu();
     
-    yc = height / 2;
-    fill(#8B5400);
-    textSize(40);
-    text("START", xc - 150, 500);
+  //}
+  
+  //void draw() {
+  //  MouseOn();
+  //}
+  int diag;
+  int xc;
+  int yc;
+  color c;
+  
+  Menu(color c) {
+    title = loadImage("Title.PNG");
+    title.resize(700, 0);
+    mainMenu(255);
+    
+    diag = 280;
+    xc = width / 2;
+    yc = height / 2 - 60;
+    this.c = c;
   }
-  else
-    titleMenu();
+
+  void mainMenu(float a) {
+    if (3 * a > 255)
+      a = 255 / 3;
+    diag = 280;
+    xc = width / 2;
+    yc = height / 2 - 60;
+    noStroke();
+    fill(#FFFFFF, a);
+    quad(xc - diag, yc, xc, yc - diag, xc, yc - diag + 100, xc - diag + 50, yc + 50);
+    quad(xc + diag, yc, xc, yc - diag, xc, yc - diag + 100, xc + diag - 50, yc + 50);
+    
+    yc += 70;
+    diag = 250;
+    quad(xc + diag, yc, xc, yc + diag, xc - diag, yc, xc, yc - diag); 
+    
+    yc -= 8;
+    stroke(#8B5400, 3 * a);
+    strokeWeight(3);
+    line(xc - diag + 40, yc, xc + diag - 40, yc);
+    
+    strokeWeight(1.5);
+    line(xc, yc + 18, xc, yc + 90);
+    line(xc - 130, yc + 105, xc + 130, yc + 105);
+    
+    fill(#8B5400, 3 * a);
+    textAlign(LEFT);
+    textSize(35);
+    text("START", xc - 140, yc + 65);
+    text("SCORE", xc + 40, yc + 65);
+    // text("SETTINGS", xc - 75, yc + 160);
+    
+    image(title, -70, 60);
+    tint(255, 3 * a);
+  }
+  
+  /* 
+  0: main menu
+  1: start
+  2: score
+  3: setting
+  */
+  int isOnMain() {
+    xc = width / 2;
+    yc = height / 2 - 5;
+    textAlign(LEFT);
+    if (mouseX < xc && mouseX > xc - 200 && mouseY > yc && mouseY < yc + 110) { // start: left
+      mainMenu(255);
+      xc = width / 2;
+      yc = height / 2 + 15;
+      diag = 250;
+      
+      noStroke();
+      fill(#D3D3D3, 200);
+      rect(xc - 140, yc, 130, 80);
+      quad(xc - 210, yc + 5, xc - 215, yc, xc - 140, yc, xc - 140, yc + 80);
+      
+      yc = height / 2;
+      fill(#8B5400);
+      textSize(37);
+      text("START", xc - 143, yc + 68);
+      
+      if(mousePressed) {
+        return 1;
+      }
+    }
+    else if(mouseX > xc && mouseX < xc + 200 && mouseY > yc && mouseY < yc + 110) { // score: right
+      mainMenu(255);
+      xc = width / 2;
+      yc = height / 2 + 15;
+      diag = 250;
+      
+      noStroke();
+      fill(#D3D3D3, 200);
+      rect(xc + 10, yc, 130, 80);
+      quad(xc + 210, yc + 5, xc + 215, yc, xc + 140, yc, xc + 140, yc + 80);
+      
+      
+      yc = height / 2;
+      fill(#8B5400);
+      textSize(37);
+      text("SCORE", xc + 37, yc + 68);
+      
+      if (mousePressed) {
+        return 2;
+      }
+    }
+    //else if (mouseX > xc - 110 && mouseX < xc + 110 && mouseY > yc + 95 && mouseY < yc + 185) {
+    //  mainMenu(255);
+    //  yc = height / 2 + 100;
+    //  noStroke();
+    //  fill(#D3D3D3);
+    //  quad(xc - 140, yc, xc + 140, yc, xc + 60, yc + 80, xc - 60, yc + 80);
+      
+    //  yc = height / 2;
+    //  fill(#8B5400);
+    //  textSize(37);
+    //  text("SETTINGS", xc - 77, yc + 147);
+      
+    //  if (mousePressed) {
+    //    return 3;
+    //  }
+    //}
+    else {
+      mainMenu(255);
+      return 0;
+    }
+    
+    return 0;
+  }
+  
+  void endMenu(int score) {
+    int s = 260;
+    xc = width / 2;
+    yc = height / 2 - 10;
+    noStroke();
+    fill(#000000, 30);
+    rect(0, 0, 600, 900);
+    
+    fill(#FFFFFF, 128);
+    quad(xc - s, yc, xc, yc - s, xc + s, yc, xc, yc + s);
+    
+    yc += 50;
+    stroke(#8B5400);
+    strokeWeight(3);
+    line(xc + 170, yc, xc - 170, yc);
+    
+    yc += 55;
+    fill(#8B5400);
+    textSize(35);
+    textAlign(CENTER);
+    text("RESTART", xc, yc);
+    
+    yc -= 225;
+    textSize(30);
+    text("Final Score", xc, yc);
+    textSize(120);
+    text(score, xc, yc + 130);
+  }
+  
+  /*
+  0: end menu
+  1: return to main menu
+  */
+  int isOnEnd() {
+    xc = width / 2;
+    yc = height / 2 + 50;
+    textAlign(CENTER);
+    if (mouseX < xc + 160 && mouseX > xc - 160 && mouseY > yc && mouseY < yc + 80) { // restart
+      noStroke();
+      fill(#D3D3D3, 200);
+      quad(xc - 180, yc, xc - 100, yc + 80, xc + 100, yc + 80, xc + 180, yc);
+      
+      yc = height / 2;
+      fill(#8B5400);
+      textSize(37);
+      text("RESTART", xc, yc + 96);
+      
+      if(mousePressed) {
+        return 1;
+      }
+    }
+    return 0;
+  }
+  
+  float a = 0;
+  void scoreMenu(int[] highScore) {
+    diag = 280;
+    xc = width / 2;
+    yc = height / 2 - 60;
+    noStroke();
+    fill(#FFFFFF, a);
+    quad(xc - diag, yc, xc, yc - diag, xc, yc - diag + 100, xc - diag + 50, yc + 50);
+    quad(xc + diag, yc, xc, yc - diag, xc, yc - diag + 100, xc + diag - 50, yc + 50);
+    
+    yc += 70;
+    diag = 250;
+    quad(xc + diag, yc, xc, yc + diag, xc - diag, yc, xc, yc - diag);
+    
+    yc = height / 2 - 40;
+    stroke(#8B5400, a);
+    strokeWeight(3);
+    line(xc - diag + 70, yc - 90, xc - diag + 70, yc + 90);
+    line(xc + diag - 70, yc - 90, xc + diag - 70, yc + 90);
+    
+    xc = xc - diag + 150;
+    yc = height / 2 - 115;
+    int spc = 50;
+    noStroke();
+    fill(#FFD700, a);
+    circle(xc, yc, 40);
+    fill(#B0BABC, a);
+    circle(xc, yc + spc, 40);
+    fill(#CD7F32, a);
+    circle(xc, yc + 2 * spc, 40);
+    
+    yc += 10;
+    fill(#FFFFFF, a);
+    textAlign(CENTER);
+    textSize(30);
+    text("1", xc, yc);
+    text("2", xc, yc + spc);
+    text("3", xc, yc + 2 * spc);
+    textSize(37);
+    fill(#6F6F6F, a);
+    text("4.", xc + 3, yc + 3 * spc);
+    text("5.", xc + 3, yc + 4 * spc);
+    
+    fill(#8B5400, a);
+    textSize(40);
+    text("Ranking" , width / 2, yc - 80);
+    text("x", width / 2, yc + 297);
+    stroke(#8B5400, a);
+    strokeWeight(1.5);
+    line(width / 2 - 80, yc - 70, width / 2 + 50, yc - 70);
+    line(width / 2 + 65, yc - 70, width / 2 + 80, yc - 70);
+    
+    xc += 40;
+    noStroke();
+    textAlign(LEFT);
+    textSize(35);
+    text(highScore[0], xc, yc);
+    text(highScore[1], xc, yc + spc);
+    text(highScore[2], xc, yc + 2 * spc);
+    text(highScore[3], xc, yc + 3 * spc);
+    text(highScore[4], xc, yc + 4 * spc);
+    a += 5;
+  }
+  
+  int isOnScore() {
+    xc = width / 2;
+    yc = 600;
+    textAlign(CENTER);
+    if (mouseX < xc + 70 && mouseX > xc - 70 && mouseY > yc && mouseY < yc + 70) { // restart
+      noStroke();
+      fill(#D3D3D3, 200);
+      triangle(xc + 80, yc, xc - 80, yc, xc, yc + 80);
+      
+      fill(#8B5400);
+      textSize(45);
+      text("x", xc, 643);
+      
+      if(mousePressed) {
+        return 1;
+      }
+    }
+    return 0;
+  }
+  
+  float alpha = 0;
+  void clearScreen() {
+    xc = width / 2;
+    yc = height / 2 - 10;
+    fill(c, alpha);
+    rect(0, 0, 600, 900);
+    alpha += 2;
+  }
+  
 }

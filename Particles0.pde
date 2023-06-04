@@ -50,12 +50,13 @@ private class Particle{
     d = random(10, 70);
     x = x0 - d * cos(dir);
     y = y0 + d * sin(dir);
-    size = 5 + random(8);
+    size = 8 + random(10);
     range = int(random(5, 25));
   }
   
   // methods
   void particle() {
+    noStroke();
     fill(#FAFF03);
     circle(x, y, size);
   }

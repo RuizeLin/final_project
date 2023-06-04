@@ -31,8 +31,23 @@ public class Object{
   
   // methods
   void object() {
+    noStroke();
     fill(#FFFFFF);
     circle(x, y - d / 2, d);
+  }
+  
+  float alpha = 0;
+  boolean objectSetup() {
+    if (alpha <= 255) {
+      noStroke();
+      fill(#FFFFFF, alpha);
+      circle(x, y - d / 2, d);
+      alpha += 5;
+      return false;
+    }
+    else {
+      return true;
+    }
   }
   
   //int n = 0;

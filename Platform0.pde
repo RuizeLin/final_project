@@ -8,6 +8,7 @@ public class Platform{
   int d;
   float angle = radians(32);
   int currentH;
+  int hue;
   
   // constructors
   Platform(float x, float y, float l, float h, int dir, int d) {
@@ -18,6 +19,18 @@ public class Platform{
     this.dir = dir;
     this.d = d;
     currentH = 0;
+    hue = int(random(120)) * 3;
+  }
+  
+  Platform(float x, float y, float l, float h, int dir, int d, int hue) {
+    this.x = x;
+    this.y = y;
+    this.l = l;
+    this.h = h;
+    this.dir = dir;
+    this.d = d;
+    currentH = 0;
+    this.hue = hue;
   }
   
   // methods
@@ -34,28 +47,29 @@ public class Platform{
     float diag1 = l * cos(angle);
     float diag2 = l * sin(angle);
     noStroke();
-    fill(#B7FFFA);
+    colorMode(HSB, 360, 100, 100);
+    fill(hue, 28, 98); // #B7FFFA
     quad(x + diag1, y, x, y - diag2, x - diag1, y, x, y + diag2);
     
     // left
-    fill(#6AFAEF);
+    fill(hue, 58, 95); // #6AFAEF
     quad(x, y + diag2, x, y + diag2 + h, x - diag1, y + h, x - diag1, y);
     
     // right
-    fill(#65DED4);
+    fill(hue, 58, 90); // #65DED4
     quad(x, y + diag2, x, y + diag2 + h, x + diag1, y + h, x + diag1, y);
+    colorMode(RGB, 255, 255, 255);
   }
   
   boolean rise() {
-    //Platform newp = p[p.length - 1];
-    Platform a = new Platform(x, y + (h - currentH), l, currentH, dir, d);
+    Platform a = new Platform(x, y + (h - currentH), l, currentH, dir, d, hue);
     if (currentH < h) {
       a.platform();
-      
       currentH++;
       return true;
     }
-    else
+    else {
       return false;
+    }
   }
 }
