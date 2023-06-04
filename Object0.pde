@@ -50,9 +50,8 @@ public class Object{
     }
   }
   
-  //int n = 0;
   void launchUpdate(float t0, int dir) {
-    t = (millis() - t0) / (float) 100; // speed of animation 75
+    t = (millis() - t0) / (float) 100;
     if (dir == 1)
       x = x0 + vx * t;
      else 
@@ -63,14 +62,6 @@ public class Object{
   boolean isOn(float xf, float yf) {
     if (x > xf - 4 && x < xf + 4
         && y > yf - 4 && y < yf + 4)
-      return true;
-    else
-      return false;
-  }
-  
-  boolean isOnX(float xf, float yf) {
-    if (x > xf - 2 && x < xf + 2
-        && y <= yf + 4)
       return true;
     else
       return false;

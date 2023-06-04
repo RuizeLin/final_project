@@ -1,20 +1,10 @@
 public class Menu{
   PImage title;
-  //void setup() {
-  //  size(600, 900);
-  //  title = loadImage("Title.PNG");
-  //  title.resize(700, 0);
-  //  titleMenu();
-    
-  //}
-  
-  //void draw() {
-  //  MouseOn();
-  //}
   int diag;
   int xc;
   int yc;
   color c;
+  float alpha;
   
   Menu(color c) {
     title = loadImage("Title.PNG");
@@ -25,6 +15,7 @@ public class Menu{
     xc = width / 2;
     yc = height / 2 - 60;
     this.c = c;
+    alpha = 0;
   }
 
   void mainMenu(float a) {
@@ -115,7 +106,6 @@ public class Menu{
       mainMenu(255);
       return 0;
     }
-    
     return 0;
   }
   
@@ -148,11 +138,7 @@ public class Menu{
     text(score, xc, yc + 130);
   }
   
-  /*
-  0: end menu
-  1: return to main menu
-  */
-  int isOnEnd() {
+  boolean isOnEnd() {
     xc = width / 2;
     yc = height / 2 + 50;
     textAlign(CENTER);
@@ -166,26 +152,24 @@ public class Menu{
       textSize(37);
       text("RESTART", xc, yc + 96);
       
-      if(mousePressed) {
-        return 1;
-      }
+      if(mousePressed)
+        return true;
     }
-    return 0;
+    return false;
   }
   
-  float a = 0;
-  void scoreMenu(int[] highScore) {
+  void scoreMenu(int[] score) {
     diag = 300;
     xc = width / 2;
     yc = height / 2 - 40;
     noStroke();
-    fill(#FFFFFF, a);
+    fill(#FFFFFF, alpha);
     quad(xc + diag, yc, xc, yc + diag, xc - diag, yc, xc, yc - diag);
     
     diag = 250;
     
     yc = height / 2 - 40;
-    stroke(#8B5400, a);
+    stroke(#8B5400, alpha);
     strokeWeight(3);
     line(xc - diag + 70, yc - 90, xc - diag + 70, yc + 90);
     line(xc + diag - 70, yc - 90, xc + diag - 70, yc + 90);
@@ -194,30 +178,30 @@ public class Menu{
     yc = height / 2 - 115;
     int spc = 50;
     noStroke();
-    fill(#FFD700, a);
+    fill(#FFD700, alpha);
     circle(xc, yc, 40);
-    fill(#B0BABC, a);
+    fill(#B0BABC, alpha);
     circle(xc, yc + spc, 40);
-    fill(#CD7F32, a);
+    fill(#CD7F32, alpha);
     circle(xc, yc + 2 * spc, 40);
     
     yc += 10;
-    fill(#FFFFFF, a);
+    fill(#FFFFFF, alpha);
     textAlign(CENTER);
     textSize(30);
     text("1", xc, yc);
     text("2", xc, yc + spc);
     text("3", xc, yc + 2 * spc);
     textSize(37);
-    fill(#6F6F6F, a);
+    fill(#6F6F6F, alpha);
     text("4.", xc + 3, yc + 3 * spc);
     text("5.", xc + 3, yc + 4 * spc);
     
-    fill(#8B5400, a);
+    fill(#8B5400, alpha);
     textSize(40);
     text("Ranking" , width / 2, yc - 80);
     text("x", width / 2, yc + 297);
-    stroke(#8B5400, a);
+    stroke(#8B5400, alpha);
     strokeWeight(1.5);
     line(width / 2 - 80, yc - 70, width / 2 + 50, yc - 70);
     line(width / 2 + 65, yc - 70, width / 2 + 80, yc - 70);
@@ -226,15 +210,15 @@ public class Menu{
     noStroke();
     textAlign(LEFT);
     textSize(35);
-    text(highScore[0], xc, yc);
-    text(highScore[1], xc, yc + spc);
-    text(highScore[2], xc, yc + 2 * spc);
-    text(highScore[3], xc, yc + 3 * spc);
-    text(highScore[4], xc, yc + 4 * spc);
-    a += 5;
+    text(score[0], xc, yc);
+    text(score[1], xc, yc + spc);
+    text(score[2], xc, yc + 2 * spc);
+    text(score[3], xc, yc + 3 * spc);
+    text(score[4], xc, yc + 4 * spc);
+    alpha += 5;
   }
   
-  int isOnScore() {
+  boolean isOnScore() {
     xc = width / 2;
     yc = 600;
     textAlign(CENTER);
@@ -248,13 +232,94 @@ public class Menu{
       text("x", xc, 643);
       
       if(mousePressed) {
+        return true;
+      }
+    }
+    return false;
+  }
+  void pauseMenu() {
+    int s = 260;
+    xc = width / 2;
+    yc = height / 2 - 10;
+    noStroke();
+    fill(#000000, 30);
+    rect(0, 0, 600, 900);
+    
+    fill(#FFFFFF, 180);
+    quad(xc - s, yc, xc, yc - s, xc + s, yc, xc, yc + s);
+    
+    yc += 10;
+    stroke(#8B5400);
+    strokeWeight(3);
+    line(xc - diag + 25, yc, xc + diag - 25, yc);
+    
+    strokeWeight(1.5);
+    line(xc, yc + 18, xc, yc + 90);
+    line(xc - 125, yc + 105, xc + 125, yc + 105);
+    
+    fill(#8B5400);
+    textAlign(LEFT);
+    textSize(35);
+    text("RESUME", xc - 150, yc + 65);
+    text("EXIT", xc + 40, yc + 65);
+    
+    yc -= 100;
+    textAlign(CENTER);
+    textSize(30);
+    text("If you exit now, ", xc, yc);
+    yc += 65;
+    text("your score will not be saved", xc, yc);
+  }
+  
+  int isOnPause() {
+    xc = width / 2;
+    yc = height / 2 - 5;
+    textAlign(LEFT);
+    if (mouseX < xc && mouseX > xc - 200 && mouseY > yc && mouseY < yc + 110) { // resume: left
+      xc = width / 2;
+      yc = height / 2 + 15;
+      diag = 250;
+      
+      noStroke();
+      fill(#D3D3D3, 200);
+      rect(xc - 140, yc, 130, 80);
+      quad(xc - 210, yc + 5, xc - 215, yc, xc - 140, yc, xc - 140, yc + 80);
+      
+      yc = height / 2;
+      fill(#8B5400);
+      textSize(37);
+      text("RESUME", xc - 152, yc + 68);
+      
+      if(mousePressed) {
         return 1;
       }
+    }
+    else if(mouseX > xc && mouseX < xc + 200 && mouseY > yc && mouseY < yc + 110) { // exit: right
+      xc = width / 2;
+      yc = height / 2 + 15;
+      diag = 250;
+      
+      noStroke();
+      fill(#D3D3D3, 200);
+      rect(xc + 10, yc, 130, 80);
+      quad(xc + 210, yc + 5, xc + 215, yc, xc + 140, yc, xc + 140, yc + 80);
+      
+      
+      yc = height / 2;
+      fill(#8B5400);
+      textSize(37);
+      text("EXIT", xc + 39, yc + 68);
+      
+      if (mousePressed) {
+        return 2;
+      }
+    }
+    else {
+      return 0;
     }
     return 0;
   }
   
-  float alpha = 0;
   void clearScreen() {
     xc = width / 2;
     yc = height / 2 - 10;

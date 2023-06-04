@@ -42,13 +42,14 @@ void draw() {
         if(g.gameSetup(1)) {
           frameRate(120);
           g.game();
-          if (g.o.y > 1000) {
+          if (g.o.y > 1000)
             s = 3;
-          }
+          if (keyPressed && key == 'q')
+            s = 4;
         }
       }
       break;
-    case 2:
+    case 2: // view score
       if (canClear == false) {
         scoreMenu();
       }
@@ -65,6 +66,15 @@ void draw() {
         }
       }
       break;
+    case 4: // pause game
+      if (canClear == false)
+        pauseMenu();
+      else {
+        if (m.alpha <= 255)
+          m.clearScreen();
+        else
+          s = 0;
+      }
   }
 }
 
@@ -83,7 +93,7 @@ void endMenu() {
   background(c);
   g.game();
   m.endMenu(g.score);
-  if (m.isOnEnd() == 1) {
+  if (m.isOnEnd()) {
     canClear = true;
     m.alpha = 0;
     t = 0;
@@ -93,9 +103,25 @@ void endMenu() {
 
 void scoreMenu() {
   m.scoreMenu(score);
-  if (m.isOnScore() == 1) {
+  if (m.isOnScore()) {
     s = 0;
-    m.a = 0;
+    m.alpha = 0;
+    time = millis();
+  }
+}
+
+void pauseMenu() {
+  background(c);
+  g.game();
+  g.isFalling = true;
+  m.pauseMenu();
+  if (m.isOnPause() == 1) {
+    s = 1;
+  }
+  else if (m.isOnPause() == 2) {
+    canClear = true;
+    m.alpha = 0;
+    t = 0;
     time = millis();
   }
 }
@@ -112,9 +138,11 @@ void score(int s) {
 }
 
 void keyPressed() {
-  g.keyPressed();
+  if (key == ' ')
+    g.keyPressed();
 }
 
 void keyReleased() {
-  g.keyReleased();
+  if (key == ' ')
+    g.keyReleased();
 }
