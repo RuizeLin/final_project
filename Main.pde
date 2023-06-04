@@ -7,7 +7,7 @@ void setup() {
   size(600, 900);
   frameRate(90);
   
-  c = #fff9d9;
+  c = #FFF9D9;
   g = new Game(c);
   m = new Menu(c);
   score = new int[5];

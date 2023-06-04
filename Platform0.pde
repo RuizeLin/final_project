@@ -19,7 +19,7 @@ public class Platform{
     this.dir = dir;
     this.d = d;
     currentH = 0;
-    hue = int(random(120)) * 3;
+    hue = int(random(180)) * 2;
   }
   
   Platform(float x, float y, float l, float h, int dir, int d, int hue) {

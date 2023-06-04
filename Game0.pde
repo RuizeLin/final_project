@@ -35,6 +35,7 @@ public class Game{
       background(c);
       p[p.length - 1].platform();
       drawP();
+      o.shadow();
       o.object();
       pt.particles();
     }
@@ -55,8 +56,8 @@ public class Game{
         result = result && false;
       textSize(90);
       textAlign(LEFT);
-      fill(#9B9B9B);
-      text(score, 50, 100);
+      fill(#9c6108);
+      text(score, 60, 120);
     }
     return result;
   }
@@ -70,11 +71,16 @@ public class Game{
         background(c);
         p[p.length - 1].platform();
         drawP();
+        o.shadow();
         o.object();
         isFalling = false;
         break;
       case 0:
-        drawAll();
+        background(c);
+        p[p.length - 1].platform();
+        drawP();
+        o.shadow();
+        o.object();
         pt.particles();
         break;
       case 1:
@@ -86,8 +92,12 @@ public class Game{
           o.object();
           drawP();
         }
-        else
-          drawAll();
+        else {
+          background(c);
+          p[p.length - 1].platform();
+          drawP();
+          o.object();
+        }
         if (overshot == true) {
           p[p.length - 1].platform();
           drawP();
@@ -105,8 +115,9 @@ public class Game{
         break;
     }
     textSize(90);
-    fill(#9B9B9B);
-    text(score, 50, 100);
+    textAlign(LEFT);
+    fill(#9c6108);
+    text(score, 60, 120);
   }
   
   void drawAll() {
@@ -171,6 +182,7 @@ public class Game{
       if (!(newp.rise()))
         newp.platform();
       drawP();
+      o.shadow();
       o.object();
     }
     
@@ -235,10 +247,11 @@ public class Game{
     y3 = m2 * (o.x - newp.x) + (newp.y - newp.l * sin(32)); // front edge of newp
 
     // return 0 is false, 1 if true, 2 if object overshot
-    if ((o.y > y1 || o.y < y2 && o.y > y3) && o.isOn(o.x, y) && (o.x > o.x0 + 10 || o.x < o.x0 - 10))
-      return true;
+    if ((o.y > y1 + 5|| o.y < y2 - 5 && o.y > y3 + 5) && o.isOn(o.x, y) && (o.x > o.x0 + 10 || o.x < o.x0 - 10)) {
+        return true;
+    }
     else {
-      if (o.y > y && o.y < y3)
+      if (o.y > y && o.y < y3 + 5)
         overshot = true;
       return false;
     }

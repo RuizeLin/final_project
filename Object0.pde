@@ -67,4 +67,18 @@ public class Object{
     else
       return false;
   }
+  
+  boolean isOnX(float xf, float yf) {
+    if (x > xf - 2 && x < xf + 2
+        && y <= yf + 4)
+      return true;
+    else
+      return false;
+  }
+  
+  void shadow() {
+    noStroke();
+    fill(#999999, 128);
+    ellipse(x + 7, y + 3, 40, 20);
+  }
 }

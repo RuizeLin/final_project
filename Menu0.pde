@@ -30,33 +30,31 @@ public class Menu{
   void mainMenu(float a) {
     if (3 * a > 255)
       a = 255 / 3;
-    diag = 280;
+    diag = 300;
     xc = width / 2;
-    yc = height / 2 - 60;
+    yc = height / 2 - 40;
     noStroke();
     fill(#FFFFFF, a);
-    quad(xc - diag, yc, xc, yc - diag, xc, yc - diag + 100, xc - diag + 50, yc + 50);
-    quad(xc + diag, yc, xc, yc - diag, xc, yc - diag + 100, xc + diag - 50, yc + 50);
+    quad(xc + diag, yc, xc, yc + diag, xc - diag, yc, xc, yc - diag);
     
-    yc += 70;
     diag = 250;
-    quad(xc + diag, yc, xc, yc + diag, xc - diag, yc, xc, yc - diag); 
+    yc += 50;
+    
     
     yc -= 8;
     stroke(#8B5400, 3 * a);
     strokeWeight(3);
-    line(xc - diag + 40, yc, xc + diag - 40, yc);
+    line(xc - diag + 25, yc, xc + diag - 25, yc);
     
     strokeWeight(1.5);
     line(xc, yc + 18, xc, yc + 90);
-    line(xc - 130, yc + 105, xc + 130, yc + 105);
+    line(xc - 125, yc + 105, xc + 125, yc + 105);
     
     fill(#8B5400, 3 * a);
     textAlign(LEFT);
     textSize(35);
     text("START", xc - 140, yc + 65);
     text("SCORE", xc + 40, yc + 65);
-    // text("SETTINGS", xc - 75, yc + 160);
     
     image(title, -70, 60);
     tint(255, 3 * a);
@@ -113,22 +111,6 @@ public class Menu{
         return 2;
       }
     }
-    //else if (mouseX > xc - 110 && mouseX < xc + 110 && mouseY > yc + 95 && mouseY < yc + 185) {
-    //  mainMenu(255);
-    //  yc = height / 2 + 100;
-    //  noStroke();
-    //  fill(#D3D3D3);
-    //  quad(xc - 140, yc, xc + 140, yc, xc + 60, yc + 80, xc - 60, yc + 80);
-      
-    //  yc = height / 2;
-    //  fill(#8B5400);
-    //  textSize(37);
-    //  text("SETTINGS", xc - 77, yc + 147);
-      
-    //  if (mousePressed) {
-    //    return 3;
-    //  }
-    //}
     else {
       mainMenu(255);
       return 0;
@@ -145,7 +127,7 @@ public class Menu{
     fill(#000000, 30);
     rect(0, 0, 600, 900);
     
-    fill(#FFFFFF, 128);
+    fill(#FFFFFF, 180);
     quad(xc - s, yc, xc, yc - s, xc + s, yc, xc, yc + s);
     
     yc += 50;
@@ -193,17 +175,14 @@ public class Menu{
   
   float a = 0;
   void scoreMenu(int[] highScore) {
-    diag = 280;
+    diag = 300;
     xc = width / 2;
-    yc = height / 2 - 60;
+    yc = height / 2 - 40;
     noStroke();
     fill(#FFFFFF, a);
-    quad(xc - diag, yc, xc, yc - diag, xc, yc - diag + 100, xc - diag + 50, yc + 50);
-    quad(xc + diag, yc, xc, yc - diag, xc, yc - diag + 100, xc + diag - 50, yc + 50);
-    
-    yc += 70;
-    diag = 250;
     quad(xc + diag, yc, xc, yc + diag, xc - diag, yc, xc, yc - diag);
+    
+    diag = 250;
     
     yc = height / 2 - 40;
     stroke(#8B5400, a);
@@ -281,7 +260,7 @@ public class Menu{
     yc = height / 2 - 10;
     fill(c, alpha);
     rect(0, 0, 600, 900);
-    alpha += 2;
+    alpha += 3;
   }
   
 }
