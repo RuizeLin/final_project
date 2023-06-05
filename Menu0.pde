@@ -1,4 +1,5 @@
 public class Menu{
+  // fields
   PImage title;
   int diag;
   int xc;
@@ -6,6 +7,7 @@ public class Menu{
   color c;
   float alpha;
   
+  // constructors
   Menu(color c) {
     title = loadImage("Title.PNG");
     title.resize(700, 0);
@@ -17,7 +19,8 @@ public class Menu{
     this.c = c;
     alpha = 0;
   }
-
+  
+  // methods
   void mainMenu(float a) {
     if (3 * a > 255)
       a = 255 / 3;
