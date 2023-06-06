@@ -11,7 +11,7 @@ public class Game{
   Game(color c) {
     p = new Platform[2];
     p[0] = new Platform(150, 550, 100, 20, 1, 0);
-    p[1] = new Platform(p[0].x, p[0].y, 50 + random(25) * 5, 20, 1, (int) random(p[0].l / 8 + 25, 70) * 5);
+    p[1] = new Platform(p[0].x, p[0].y, 70 + random(25) * 5, 20, 1, (int) random(p[0].l / 8 + 25, 70) * 5);
     p[1].newXY();
     
     o = new Object(150, 550);  
@@ -133,14 +133,14 @@ public class Game{
   void newP() {
     copyP();
     oldp = p[p.length - 2];
-    p[p.length - 1] = new Platform(oldp.x, oldp.y, 50 + random(25) * 5, 20, (int) random(2), (int) random(oldp.l / 8 + 25, 70) * 5);
+    p[p.length - 1] = new Platform(oldp.x, oldp.y, 70 + random(25) * 5, 20, (int) random(2), (int) random(oldp.l / 8 + 25, 70) * 5);
     p[p.length - 1].newXY();
   }
   
   void newP(int dir) {
     copyP();
     oldp = p[p.length - 2];
-    p[p.length - 1] = new Platform(oldp.x, oldp.y, 50 + random(25) * 5, 20, dir, (int) random(oldp.l / 8 + 25, 70) * 5);
+    p[p.length - 1] = new Platform(oldp.x, oldp.y, 70 + random(25) * 5, 20, dir, (int) random(oldp.l / 8 + 25, 70) * 5);
     p[p.length - 1].newXY();
   }
   
